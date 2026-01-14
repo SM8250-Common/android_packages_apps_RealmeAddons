@@ -24,6 +24,7 @@ import android.util.Log;
 import org.lineageos.settings.device.battery.BypassChargingUtils;
 import org.lineageos.settings.device.battery.SmartChargingUtils;
 import org.lineageos.settings.device.battery.PowerStateMonitorService;
+import org.lineageos.settings.device.charginganimation.ChargingMonitorService;
 import org.lineageos.settings.device.display.AntiFlikerUtils;
 import org.lineageos.settings.device.thermal.ThermalUtils;
 
@@ -50,5 +51,9 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         // Start power state monitor service
         Intent serviceIntent = new Intent(context, PowerStateMonitorService.class);
         context.startService(serviceIntent);
+
+        // Start charging animation monitor service
+        Intent chargingServiceIntent = new Intent(context, ChargingMonitorService.class);
+        context.startService(chargingServiceIntent);
     }
 }

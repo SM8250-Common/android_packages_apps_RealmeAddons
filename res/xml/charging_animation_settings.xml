@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2025 The LineageOS Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <org.lineageos.settings.device.preference.LayoutPreference
+        android:key="charging_animation_header"
+        android:layout="@layout/charging_animation_header"
+        android:selectable="false" />
+
+    <PreferenceCategory
+        android:key="charging_animation_settings_category">
+
+        <SwitchPreferenceCompat
+            android:key="charging_animation_enabled"
+            android:title="@string/charging_animation_enable_title"
+            android:summary="@string/charging_animation_enable_summary"
+            android:defaultValue="true" />
+
+        <ListPreference
+            android:key="charging_animation_style"
+            android:title="@string/charging_animation_style_title"
+            android:summary="@string/charging_animation_style_summary"
+            android:entries="@array/charging_animation_style_entries"
+            android:entryValues="@array/charging_animation_style_values"
+            android:defaultValue="classic" />
+
+        <Preference
+            android:key="charging_animation_import"
+            android:title="@string/charging_animation_import_title"
+            android:summary="@string/charging_animation_import_summary" />
+
+        <ListPreference
+            android:key="charging_animation_position"
+            android:title="@string/charging_animation_position_title"
+            android:summary="@string/charging_animation_position_summary"
+            android:entries="@array/charging_animation_position_entries"
+            android:entryValues="@array/charging_animation_position_values"
+            android:defaultValue="center" />
+
+        <ListPreference
+            android:key="charging_animation_size"
+            android:title="@string/charging_animation_size_title"
+            android:summary="@string/charging_animation_size_summary"
+            android:entries="@array/charging_animation_size_entries"
+            android:entryValues="@array/charging_animation_size_values"
+            android:defaultValue="medium" />
+
+        <ListPreference
+            android:key="charging_animation_background"
+            android:title="@string/charging_animation_background_title"
+            android:summary="@string/charging_animation_background_summary"
+            android:entries="@array/charging_animation_background_entries"
+            android:entryValues="@array/charging_animation_background_values"
+            android:defaultValue="blur_medium" />
+
+        <SwitchPreferenceCompat
+            android:key="charging_animation_show_text"
+            android:title="@string/charging_animation_show_text_title"
+            android:summary="@string/charging_animation_show_text_summary"
+            android:defaultValue="true" />
+
+        <SwitchPreferenceCompat
+            android:key="charging_animation_show_bolt"
+            android:title="@string/charging_animation_show_bolt_title"
+            android:summary="@string/charging_animation_show_bolt_summary"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

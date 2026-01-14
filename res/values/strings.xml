@@ -42,6 +42,54 @@
     <string name="charging_speed_title">Charging Speed</string>
     <string name="charging_speed_summary">Standard or Battery Care mode</string>
 
+    <!-- Charging Animation -->
+    <string name="charging_animation_title">Charging Animation</string>
+    <string name="charging_animation_summary">Show animated battery overlay when charging</string>
+    <string name="charging_animation_enable_title">Enable Charging Animation</string>
+    <string name="charging_animation_enable_summary">Show animation when device is charging</string>
+    <string name="charging_animation_position_title">Position</string>
+    <string name="charging_animation_position_summary">Choose overlay position</string>
+    <string name="charging_animation_size_title">Size</string>
+    <string name="charging_animation_size_summary">Adjust animation size</string>
+    <string name="charging_animation_opacity_title">Opacity</string>
+    <string name="charging_animation_opacity_summary">Adjust transparency</string>
+    <string name="charging_animation_show_text_title">Show Percentage</string>
+    <string name="charging_animation_show_text_summary">Display battery percentage</string>
+    <string name="charging_animation_show_bolt_title">Show Bolt Icon</string>
+    <string name="charging_animation_show_bolt_summary">Display charging bolt icon on the battery</string>
+    <string name="charging_animation_tile_title">Charging Animation</string>
+    <string name="charging_animation_description">Display a beautiful animated battery overlay when your device is charging. Customize its appearance with different positions, sizes, and transparency levels to match your style.</string>
+    <string name="charging_animation_style_title">Animation Style</string>
+    <string name="charging_animation_style_summary">Choose animation style</string>
+
+    <!-- Animation Style Names -->
+    <string name="charging_animation_style_classic">Classic</string>
+    <string name="charging_animation_style_charging_status">Charging Status</string>
+    <string name="charging_animation_style_energy_bolt">Energy Bolt</string>
+    <string name="charging_animation_style_fast_thunder">Fast Thunder</string>
+    <string name="charging_animation_style_loading">Loading</string>
+    <string name="charging_animation_style_renewable_energy">Renewable Energy</string>
+    <string name="charging_animation_style_custom">Custom</string>
+
+    <!-- Custom Animation -->
+    <string name="charging_animation_import_title">Import Custom Animation</string>
+    <string name="charging_animation_import_summary">Select a Lottie JSON file</string>
+    <string name="charging_animation_import_summary_set">Custom animation loaded</string>
+    <string name="charging_animation_import_success">Animation imported successfully</string>
+    <string name="charging_animation_import_error">Failed to import animation</string>
+    <string name="charging_animation_no_custom">No custom animation set. Import one first.</string>
+
+    <!-- Background Style Names -->
+    <string name="charging_animation_background_title">Background</string>
+    <string name="charging_animation_background_summary">Choose background effect</string>
+    <string name="charging_animation_bg_blur_light">Blur (Light)</string>
+    <string name="charging_animation_bg_blur_medium">Blur (Medium)</string>
+    <string name="charging_animation_bg_blur_heavy">Blur (Heavy)</string>
+    <string name="charging_animation_bg_dim_light">Dim (Light)</string>
+    <string name="charging_animation_bg_dim_medium">Dim (Medium)</string>
+    <string name="charging_animation_bg_dim_heavy">Dim (Heavy)</string>
+    <string name="charging_animation_bg_none">None (Transparent)</string>
+
     <!-- GameBar Overlay -->
     <string name="game_bar_title">GameBar</string>
     <string name="game_bar_summary">Enable the system overlay (FPS, Temp, etc.)</string>

@@ -19,6 +19,7 @@ android_app {
         "SettingsLib",
         "SettingsLibCollapsingToolbarBaseActivity",
         "org.lineageos.settings.resources",
+        "lottie",
     ],
 
     optimize: {
