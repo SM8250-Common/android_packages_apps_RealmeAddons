@@ -28,4 +28,20 @@
 
     </PreferenceCategory>
 
-</PreferenceScreen>
+    <PreferenceCategory
+        android:key="battery_category"
+        android:title="Battery">
+
+        <Preference
+            android:key="smart_charging"
+            android:title="@string/smart_charging_title"
+            android:summary="@string/smart_charging_summary">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="org.lineageos.settings.device"
+                android:targetClass="org.lineageos.settings.device.battery.SmartChargingActivity" />
+        </Preference>
+
+    </PreferenceCategory>
+
+    </PreferenceScreen>

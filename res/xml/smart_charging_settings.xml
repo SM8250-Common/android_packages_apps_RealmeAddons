@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2025 The LineageOS Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <org.lineageos.settings.device.preference.LayoutPreference
+        android:key="smart_charging_header"
+        android:layout="@layout/smart_charging_header"
+        android:selectable="false" />
+
+    <com.android.settingslib.widget.MainSwitchPreference
+        android:key="smart_charging_enabled"
+        android:title="@string/smart_charging_enable_title"
+        android:summary="@string/smart_charging_enable_summary"
+        android:persistent="false" />
+
+    <ListPreference
+        android:key="charging_speed"
+        android:title="@string/charging_speed_title"
+        android:entries="@array/charging_speed_entries"
+        android:entryValues="@array/charging_speed_values"
+        android:defaultValue="0"
+        android:summary="%s"
+        android:persistent="true" />
+
+</PreferenceScreen>

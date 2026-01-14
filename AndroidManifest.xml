@@ -24,6 +24,7 @@
     <uses-permission android:name="android.permission.STATUS_BAR" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:icon="@drawable/ic_settings_device"
@@ -110,6 +111,17 @@
 
         <service
             android:name=".battery.PowerStateMonitorService"
+            android:exported="false" />
+
+        <!-- Smart Charging -->
+        <activity
+            android:name=".battery.SmartChargingActivity"
+            android:exported="false"
+            android:label="@string/smart_charging_title"
+            android:enableOnBackInvokedCallback="true" />
+
+        <service
+            android:name=".battery.SmartChargingService"
             android:exported="false" />
 
         <!-- Thermal Profiles -->

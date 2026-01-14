@@ -138,4 +138,14 @@
         <item>6</item>
     </string-array>
 
+    <!-- Charging speed -->
+    <string-array name="charging_speed_entries">
+        <item>Standard</item>
+        <item>Battery Care</item>
+    </string-array>
+    <string-array name="charging_speed_values">
+        <item>0</item>
+        <item>2</item>
+    </string-array>
+
 </resources>

@@ -115,14 +115,15 @@ public final class FileUtils {
         return file.exists() && file.canRead();
     }
 
-    /**
-     * Checks whether the given file is writable
-     *
-     * @return true if writable, false if not
-     */
     public static boolean isFileWritable(String fileName) {
         final File file = new File(fileName);
-        return file.exists() && file.canWrite();
+        if (!file.exists()) {
+            return false;
+        }
+        if (fileName.startsWith("/sys/")) {
+            return true;
+        }
+        return file.canWrite();
     }
 
     /**

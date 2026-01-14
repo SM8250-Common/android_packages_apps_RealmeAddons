@@ -33,6 +33,15 @@
     <string name="bypass_charging_unavailable_summary">Connect charger to enable this feature</string>
     <string name="bypass_charging_tile_title">Bypass Charging</string>
 
+    <!-- Smart Charging -->
+    <string name="smart_charging_title">Smart Charging</string>
+    <string name="smart_charging_summary">Control charging speed to extend battery lifespan</string>
+    <string name="smart_charging_description">Extend your battery lifespan by controlling charging speed. Slower charging generates less heat and can significantly reduce battery degradation over time.</string>
+    <string name="smart_charging_enable_title">Enable Smart Charging</string>
+    <string name="smart_charging_enable_summary">Enable charging speed control</string>
+    <string name="charging_speed_title">Charging Speed</string>
+    <string name="charging_speed_summary">Standard or Battery Care mode</string>
+
     <!-- GameBar Overlay -->
     <string name="game_bar_title">GameBar</string>
     <string name="game_bar_summary">Enable the system overlay (FPS, Temp, etc.)</string>
