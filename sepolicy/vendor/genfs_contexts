@@ -1,0 +1,5 @@
+# GPU
+genfscon sysfs /class/kgsl/kgsl-3d0                                                                               u:object_r:vendor_sysfs_kgsl:s0
+
+# Thermal
+genfscon sysfs /class/thermal/thermal_message                                                                     u:object_r:sysfs_thermal:s0
