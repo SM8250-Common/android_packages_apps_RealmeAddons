@@ -54,4 +54,20 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="gaming_category"
+        android:title="Gaming">
+
+        <Preference
+            android:key="game_tools"
+            android:title="@string/game_optimizer_title"
+            android:summary="@string/game_optimizer_summary">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="org.lineageos.settings.device"
+                android:targetClass="org.lineageos.settings.device.gameoptimizer.GameOptimizerActivity" />
+        </Preference>
+
+    </PreferenceCategory>
+
     </PreferenceScreen>
