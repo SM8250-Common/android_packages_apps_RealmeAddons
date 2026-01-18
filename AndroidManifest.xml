@@ -193,5 +193,10 @@
             </intent-filter>
         </receiver>
 
+        <!-- Game Mode -->
+        <service
+            android:name=".gamemode.GameModeRotationService"
+            android:exported="false" />
+
     </application>
 </manifest>

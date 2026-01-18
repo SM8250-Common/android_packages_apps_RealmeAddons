@@ -26,6 +26,12 @@
         android:title="@string/game_optimizer_title">
 
         <SwitchPreferenceCompat
+            android:key="game_mode_enable"
+            android:title="@string/game_mode_title"
+            android:summary="@string/game_mode_summary"
+            android:defaultValue="false" />
+
+        <SwitchPreferenceCompat
             android:key="bypass_charging"
             android:title="@string/bypass_charging_title"
             android:summary="@string/bypass_charging_summary"

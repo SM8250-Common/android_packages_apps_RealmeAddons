@@ -31,13 +31,16 @@ import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 import org.lineageos.settings.device.R;
 import org.lineageos.settings.device.battery.BypassChargingController;
 import org.lineageos.settings.device.battery.BypassChargingUtils;
+import org.lineageos.settings.device.gamemode.GameModeSwitch;
 
 public class GameOptimizerFragment extends SettingsBasePreferenceFragment
         implements OnPreferenceChangeListener, BypassChargingController.StateChangeListener {
 
     private static final String KEY_BYPASS_CHARGING = "bypass_charging";
+    private static final String KEY_GAME_MODE = "game_mode_enable";
 
     private SwitchPreferenceCompat mBypassChargingPreference;
+    private SwitchPreferenceCompat mGameModePreference;
     private BypassChargingController mController;
 
     private final BroadcastReceiver mPowerReceiver = new BroadcastReceiver() {
@@ -57,6 +60,16 @@ public class GameOptimizerFragment extends SettingsBasePreferenceFragment
         addPreferencesFromResource(R.xml.game_optimizer_preferences);
 
         mController = BypassChargingController.getInstance(getContext());
+
+        mGameModePreference = findPreference(KEY_GAME_MODE);
+        if (mGameModePreference != null) {
+            if (GameModeSwitch.isSupported()) {
+                mGameModePreference.setOnPreferenceChangeListener(
+                    new GameModeSwitch(getContext()));
+            } else {
+                getPreferenceScreen().removePreference(mGameModePreference);
+            }
+        }
 
         mBypassChargingPreference = findPreference(KEY_BYPASS_CHARGING);
         if (mBypassChargingPreference != null) {

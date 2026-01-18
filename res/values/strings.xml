@@ -99,6 +99,10 @@
     <string name="game_bar_tile_label">GameBar</string>
     <string name="game_bar_tile_description">Toggle the game overlay</string>
 
+    <!-- Game Mode -->
+    <string name="game_mode_title">Game Mode</string>
+    <string name="game_mode_summary">Boost touch sampling rate and enable performance mode</string>
+
     <!-- Game Optimizer -->
     <string name="game_optimizer_title">Game Tools</string>
     <string name="game_optimizer_summary">Optimize device performance for gaming</string>

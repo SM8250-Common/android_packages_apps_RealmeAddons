@@ -1,5 +1,8 @@
 # Proc
 /proc/stat                                                        u:object_r:proc_stat:s0
+/proc/touchpanel/game_switch_enable                               u:object_r:proc_touchpanel:s0
+/proc/touchpanel/oplus_tp_limit_enable                            u:object_r:proc_touchpanel:s0
+/proc/touchpanel/oplus_tp_direction                               u:object_r:proc_touchpanel:s0
 
 # GPU
 /sys/class/kgsl/kgsl-3d0/gpu_busy_percentage                      u:object_r:vendor_sysfs_kgsl:s0
