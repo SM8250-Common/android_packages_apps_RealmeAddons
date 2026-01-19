@@ -16,8 +16,10 @@
 
 package org.lineageos.settings.device.battery;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.service.quicksettings.TileService;
 import android.util.Log;
 
 import androidx.preference.PreferenceManager;
@@ -39,7 +41,7 @@ public class BypassChargingController {
     private static final String BYPASS_CHARGING_KEY = "bypass_charging";
 
     // Hardware control values (inverted logic)
-    private static final String BYPASS_ENABLED = "0";  // Bypass active
+    private static final String BYPASS_ENABLED = "0"; // Bypass active
     private static final String BYPASS_DISABLED = "1"; // Normal charging
 
     private static BypassChargingController sInstance;
@@ -105,7 +107,8 @@ public class BypassChargingController {
      */
     public void handlePowerConnected() {
         synchronized (sLock) {
-            if (DEBUG) Log.d(TAG, "Power connected");
+            if (DEBUG)
+                Log.d(TAG, "Power connected");
             mIsPowerConnected = true;
 
             // If bypass was enabled, re-enable hardware
@@ -122,7 +125,8 @@ public class BypassChargingController {
      */
     public void handlePowerDisconnected() {
         synchronized (sLock) {
-            if (DEBUG) Log.d(TAG, "Power disconnected");
+            if (DEBUG)
+                Log.d(TAG, "Power disconnected");
             mIsPowerConnected = false;
 
             // Disable hardware bypass when unplugged
@@ -204,10 +208,12 @@ public class BypassChargingController {
             FileUtils.writeLine(BYPASS_CHARGING_NODE, BYPASS_ENABLED);
             String verify = FileUtils.readOneLine(BYPASS_CHARGING_NODE);
             if (!BYPASS_ENABLED.equals(verify)) {
-                Log.e(TAG, "Hardware bypass enable verification failed: expected=" + BYPASS_ENABLED + " actual=" + verify);
+                Log.e(TAG,
+                        "Hardware bypass enable verification failed: expected=" + BYPASS_ENABLED + " actual=" + verify);
                 return false;
             }
-            if (DEBUG) Log.d(TAG, "Hardware bypass enabled");
+            if (DEBUG)
+                Log.d(TAG, "Hardware bypass enabled");
             return true;
         } catch (Exception e) {
             Log.e(TAG, "Failed to enable hardware bypass", e);
@@ -223,10 +229,12 @@ public class BypassChargingController {
             FileUtils.writeLine(BYPASS_CHARGING_NODE, BYPASS_DISABLED);
             String verify = FileUtils.readOneLine(BYPASS_CHARGING_NODE);
             if (!BYPASS_DISABLED.equals(verify)) {
-                Log.e(TAG, "Hardware bypass disable verification failed: expected=" + BYPASS_DISABLED + " actual=" + verify);
+                Log.e(TAG, "Hardware bypass disable verification failed: expected=" + BYPASS_DISABLED + " actual="
+                        + verify);
                 return false;
             }
-            if (DEBUG) Log.d(TAG, "Hardware bypass disabled");
+            if (DEBUG)
+                Log.d(TAG, "Hardware bypass disabled");
             return true;
         } catch (Exception e) {
             Log.e(TAG, "Failed to disable hardware bypass", e);
@@ -240,7 +248,8 @@ public class BypassChargingController {
     private void loadState() {
         synchronized (sLock) {
             mBypassEnabled = mPrefs.getBoolean(BYPASS_CHARGING_KEY, false);
-            if (DEBUG) Log.d(TAG, "Loaded state: bypassEnabled=" + mBypassEnabled);
+            if (DEBUG)
+                Log.d(TAG, "Loaded state: bypassEnabled=" + mBypassEnabled);
         }
     }
 
@@ -249,7 +258,8 @@ public class BypassChargingController {
      */
     private void saveState() {
         mPrefs.edit().putBoolean(BYPASS_CHARGING_KEY, mBypassEnabled).apply();
-        if (DEBUG) Log.d(TAG, "Saved state: bypassEnabled=" + mBypassEnabled);
+        if (DEBUG)
+            Log.d(TAG, "Saved state: bypassEnabled=" + mBypassEnabled);
     }
 
     /**
@@ -258,6 +268,16 @@ public class BypassChargingController {
     private void notifyStateChanged() {
         for (StateChangeListener listener : mListeners) {
             listener.onStateChanged(mBypassEnabled, mIsPowerConnected);
+        }
+        requestTileUpdate();
+    }
+
+    private void requestTileUpdate() {
+        try {
+            TileService.requestListeningState(mContext,
+                    new ComponentName(mContext, BypassChargingTileService.class));
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to request tile update", e);
         }
     }
 
@@ -277,7 +297,8 @@ public class BypassChargingController {
                 enableHardwareBypass();
             }
 
-            if (DEBUG) Log.d(TAG, "Restored state: bypassEnabled=" + mBypassEnabled + " powerConnected=" + mIsPowerConnected);
+            if (DEBUG)
+                Log.d(TAG, "Restored state: bypassEnabled=" + mBypassEnabled + " powerConnected=" + mIsPowerConnected);
         }
     }
 }
