@@ -116,17 +116,6 @@
             android:enableOnBackInvokedCallback="true" />
 
         <service
-            android:name=".charginganimation.ChargingAnimationTileService"
-            android:icon="@drawable/ic_charging_animation"
-            android:label="@string/charging_animation_tile_title"
-            android:exported="true"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-        </service>
-
-        <service
             android:name=".charginganimation.ChargingMonitorService"
             android:exported="false" />
 

@@ -58,7 +58,6 @@
     <string name="charging_animation_show_text_summary">Display battery percentage</string>
     <string name="charging_animation_show_bolt_title">Show Bolt Icon</string>
     <string name="charging_animation_show_bolt_summary">Display charging bolt icon on the battery</string>
-    <string name="charging_animation_tile_title">Charging Animation</string>
     <string name="charging_animation_description">Display a beautiful animated battery overlay when your device is charging. Customize its appearance with different positions, sizes, and transparency levels to match your style.</string>
     <string name="charging_animation_style_title">Animation Style</string>
     <string name="charging_animation_style_summary">Choose animation style</string>
