@@ -28,7 +28,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:icon="@drawable/ic_settings_device"
+        android:icon="@drawable/ic_realme_addons_logo"
         android:label="@string/device_settings_app_name"
         android:persistent="true"
         android:theme="@style/Theme.SubSettingsBase.Expressive">
@@ -56,7 +56,7 @@
                 android:value="com.android.settings.category.ia.system" />
             <meta-data
                 android:name="com.android.settings.icon"
-                android:resource="@drawable/ic_settings_device" />
+                android:resource="@drawable/ic_realme_addons_logo" />
             <meta-data
                 android:name="com.android.settings.icon_tintable"
                 android:value="true" />
