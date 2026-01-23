@@ -18,6 +18,7 @@
     <string name="device_settings_app_name">Realme Addons</string>
     <string name="device_settings_title">Realme Addons</string>
     <string name="device_settings_summary">Advanced features and customizations</string>
+    <string name="device_settings_description">Unlock advanced features and customizations tailored for your Realme device. From display enhancements to battery optimizations and gaming tools, customize your device to match your needs.</string>
 
     <!-- Display category -->
     <string name="display_category_title">Display</string>

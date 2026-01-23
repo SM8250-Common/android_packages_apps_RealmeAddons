@@ -17,6 +17,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
+        android:key="device_settings_header_category">
+
+        <org.lineageos.settings.device.preference.LayoutPreference
+            android:key="device_settings_header"
+            android:layout="@layout/device_settings_header"
+            android:selectable="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="display_category"
         android:title="@string/display_category_title">
 
