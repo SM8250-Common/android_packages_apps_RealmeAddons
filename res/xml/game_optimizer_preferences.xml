@@ -31,12 +31,6 @@
             android:summary="@string/game_mode_summary"
             android:defaultValue="false" />
 
-        <SwitchPreferenceCompat
-            android:key="bypass_charging"
-            android:title="@string/bypass_charging_title"
-            android:summary="@string/bypass_charging_summary"
-            android:defaultValue="false" />
-
         <Preference
             android:key="thermal_profile_settings"
             android:title="@string/thermal_profile_title"
@@ -56,6 +50,26 @@
                 android:targetPackage="org.lineageos.settings.device"
                 android:targetClass="org.lineageos.settings.device.gamebar.GameBarSettingsActivity" />
         </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="bypass_charging_category"
+        android:title="@string/bypass_charging_title">
+
+        <SwitchPreferenceCompat
+            android:key="bypass_charging"
+            android:title="@string/bypass_charging_enable_title"
+            android:summary="@string/bypass_charging_summary"
+            android:defaultValue="false" />
+
+        <androidx.preference.SeekBarPreference
+            android:key="bypass_charging_threshold"
+            android:title="@string/bypass_charging_threshold_title"
+            android:defaultValue="30"
+            android:min="30"
+            android:max="60"
+            android:dependency="bypass_charging" />
 
     </PreferenceCategory>
 

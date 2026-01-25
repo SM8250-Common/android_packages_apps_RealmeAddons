@@ -23,7 +23,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.Preference.OnPreferenceChangeListener;
+import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.settingslib.widget.SettingsBasePreferenceFragment;
@@ -37,9 +39,13 @@ public class GameOptimizerFragment extends SettingsBasePreferenceFragment
         implements OnPreferenceChangeListener, BypassChargingController.StateChangeListener {
 
     private static final String KEY_BYPASS_CHARGING = "bypass_charging";
+    private static final String KEY_BYPASS_THRESHOLD = "bypass_charging_threshold";
+    private static final String KEY_BYPASS_CATEGORY = "bypass_charging_category";
     private static final String KEY_GAME_MODE = "game_mode_enable";
 
     private SwitchPreferenceCompat mBypassChargingPreference;
+    private SeekBarPreference mThresholdPreference;
+    private PreferenceCategory mBypassCategory;
     private SwitchPreferenceCompat mGameModePreference;
     private BypassChargingController mController;
 
@@ -71,13 +77,34 @@ public class GameOptimizerFragment extends SettingsBasePreferenceFragment
             }
         }
 
+        mBypassCategory = findPreference(KEY_BYPASS_CATEGORY);
         mBypassChargingPreference = findPreference(KEY_BYPASS_CHARGING);
-        if (mBypassChargingPreference != null) {
-            if (BypassChargingUtils.isSupported()) {
+        mThresholdPreference = findPreference(KEY_BYPASS_THRESHOLD);
+
+        if (BypassChargingUtils.isSupported()) {
+            if (mBypassChargingPreference != null) {
                 mBypassChargingPreference.setOnPreferenceChangeListener(this);
-                updateBypassChargingState();
-            } else {
-                getPreferenceScreen().removePreference(mBypassChargingPreference);
+            }
+
+            if (mThresholdPreference != null) {
+                // Configure SeekBar for discrete steps: 30, 40, 50, 60
+                mThresholdPreference.setMin(30);
+                mThresholdPreference.setMax(60);
+                mThresholdPreference.setSeekBarIncrement(10);
+                mThresholdPreference.setShowSeekBarValue(true);
+
+                int currentThreshold = BypassChargingUtils.getThreshold(getContext());
+                mThresholdPreference.setValue(currentThreshold);
+                updateThresholdSummary(currentThreshold);
+
+                mThresholdPreference.setOnPreferenceChangeListener(this);
+            }
+
+            updateBypassChargingState();
+        } else {
+            // Remove bypass charging category if not supported
+            if (mBypassCategory != null) {
+                getPreferenceScreen().removePreference(mBypassCategory);
             }
         }
     }
@@ -85,7 +112,7 @@ public class GameOptimizerFragment extends SettingsBasePreferenceFragment
     @Override
     public void onResume() {
         super.onResume();
-        if (mBypassChargingPreference != null && BypassChargingUtils.isSupported()) {
+        if (BypassChargingUtils.isSupported()) {
             // Register power state receiver
             IntentFilter filter = new IntentFilter();
             filter.addAction(Intent.ACTION_POWER_CONNECTED);
@@ -102,7 +129,7 @@ public class GameOptimizerFragment extends SettingsBasePreferenceFragment
     @Override
     public void onPause() {
         super.onPause();
-        if (mBypassChargingPreference != null && BypassChargingUtils.isSupported()) {
+        if (BypassChargingUtils.isSupported()) {
             try {
                 getContext().unregisterReceiver(mPowerReceiver);
             } catch (IllegalArgumentException e) {
@@ -115,20 +142,26 @@ public class GameOptimizerFragment extends SettingsBasePreferenceFragment
 
     @Override
     public void onStateChanged(boolean bypassEnabled, boolean powerConnected) {
-        if (mBypassChargingPreference == null) {
+        if (mBypassChargingPreference == null || !isAdded() || getActivity() == null) {
             return;
         }
 
-        // Update checked state
-        mBypassChargingPreference.setChecked(bypassEnabled);
+        // Ensure UI updates happen on the main thread
+        getActivity().runOnUiThread(() -> {
+            if (mBypassChargingPreference == null || !isAdded()) {
+                return;
+            }
+            // Update checked state
+            mBypassChargingPreference.setChecked(bypassEnabled);
 
-        // Update enabled state and summary based on power connection
-        mBypassChargingPreference.setEnabled(powerConnected);
-        if (!powerConnected) {
-            mBypassChargingPreference.setSummary(R.string.bypass_charging_unavailable_summary);
-        } else {
-            mBypassChargingPreference.setSummary(R.string.bypass_charging_summary);
-        }
+            // Update enabled state and summary based on power connection
+            mBypassChargingPreference.setEnabled(powerConnected);
+            if (!powerConnected) {
+                mBypassChargingPreference.setSummary(R.string.bypass_charging_unavailable_summary);
+            } else {
+                mBypassChargingPreference.setSummary(R.string.bypass_charging_summary);
+            }
+        });
     }
 
     private void updateBypassChargingState() {
@@ -145,13 +178,38 @@ public class GameOptimizerFragment extends SettingsBasePreferenceFragment
         } else {
             mBypassChargingPreference.setSummary(R.string.bypass_charging_summary);
         }
+
+        // Update threshold preference state
+        if (mThresholdPreference != null) {
+            int threshold = BypassChargingUtils.getThreshold(getContext());
+            mThresholdPreference.setValue(threshold);
+            updateThresholdSummary(threshold);
+        }
+    }
+
+    private void updateThresholdSummary(int threshold) {
+        if (mThresholdPreference != null) {
+            mThresholdPreference.setSummary(
+                    getString(R.string.bypass_charging_threshold_summary, threshold));
+        }
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (KEY_BYPASS_CHARGING.equals(preference.getKey())) {
+        String key = preference.getKey();
+
+        if (KEY_BYPASS_CHARGING.equals(key)) {
             boolean enabled = (Boolean) newValue;
             return BypassChargingUtils.setEnabled(getContext(), enabled);
+        } else if (KEY_BYPASS_THRESHOLD.equals(key)) {
+            int threshold = (Integer) newValue;
+            // Snap to nearest valid value (30, 40, 50, 60)
+            threshold = Math.round(threshold / 10f) * 10;
+            threshold = Math.max(30, Math.min(60, threshold));
+
+            BypassChargingUtils.setThreshold(getContext(), threshold);
+            updateThresholdSummary(threshold);
+            return true;
         }
         return false;
     }

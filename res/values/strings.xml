@@ -30,9 +30,14 @@
 
     <!-- Bypass Charging -->
     <string name="bypass_charging_title">Bypass Charging</string>
-    <string name="bypass_charging_summary">Power device directly from charger, bypass battery to reduce heat during intensive tasks</string>
-    <string name="bypass_charging_unavailable_summary">Connect charger to enable this feature</string>
+    <string name="bypass_charging_enable_title">Enable</string>
+    <string name="bypass_charging_summary">Power device directly from charger to reduce heat</string>
+    <string name="bypass_charging_unavailable_summary">Connect charger to enable</string>
     <string name="bypass_charging_tile_title">Bypass Charging</string>
+    <string name="bypass_charging_threshold_title">Minimum Battery</string>
+    <string name="bypass_charging_threshold_summary">Bypass activates above %d%%</string>
+    <string name="bypass_charging_paused">Paused (low battery)</string>
+    <string name="bypass_charging_low_battery">Bypass paused: battery below %d%%</string>
 
     <!-- Smart Charging -->
     <string name="smart_charging_title">Smart Charging</string>
