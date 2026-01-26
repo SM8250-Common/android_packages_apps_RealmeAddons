@@ -25,7 +25,6 @@ import android.os.Bundle;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.Preference.OnPreferenceChangeListener;
-import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.settingslib.widget.SettingsBasePreferenceFragment;
@@ -34,6 +33,7 @@ import org.lineageos.settings.device.R;
 import org.lineageos.settings.device.battery.BypassChargingController;
 import org.lineageos.settings.device.battery.BypassChargingUtils;
 import org.lineageos.settings.device.gamemode.GameModeSwitch;
+import org.lineageos.settings.device.preference.SegmentedButtonPreference;
 
 public class GameOptimizerFragment extends SettingsBasePreferenceFragment
         implements OnPreferenceChangeListener, BypassChargingController.StateChangeListener {
@@ -44,7 +44,7 @@ public class GameOptimizerFragment extends SettingsBasePreferenceFragment
     private static final String KEY_GAME_MODE = "game_mode_enable";
 
     private SwitchPreferenceCompat mBypassChargingPreference;
-    private SeekBarPreference mThresholdPreference;
+    private SegmentedButtonPreference mThresholdPreference;
     private PreferenceCategory mBypassCategory;
     private SwitchPreferenceCompat mGameModePreference;
     private BypassChargingController mController;
@@ -87,17 +87,14 @@ public class GameOptimizerFragment extends SettingsBasePreferenceFragment
             }
 
             if (mThresholdPreference != null) {
-                // Configure SeekBar for discrete steps: 30, 40, 50, 60
-                mThresholdPreference.setMin(30);
-                mThresholdPreference.setMax(60);
-                mThresholdPreference.setSeekBarIncrement(10);
-                mThresholdPreference.setShowSeekBarValue(true);
-
                 int currentThreshold = BypassChargingUtils.getThreshold(getContext());
                 mThresholdPreference.setValue(currentThreshold);
                 updateThresholdSummary(currentThreshold);
 
-                mThresholdPreference.setOnPreferenceChangeListener(this);
+                mThresholdPreference.setOnValueChangedListener(newValue -> {
+                    BypassChargingUtils.setThreshold(getContext(), newValue);
+                    updateThresholdSummary(newValue);
+                });
             }
 
             updateBypassChargingState();
@@ -201,15 +198,6 @@ public class GameOptimizerFragment extends SettingsBasePreferenceFragment
         if (KEY_BYPASS_CHARGING.equals(key)) {
             boolean enabled = (Boolean) newValue;
             return BypassChargingUtils.setEnabled(getContext(), enabled);
-        } else if (KEY_BYPASS_THRESHOLD.equals(key)) {
-            int threshold = (Integer) newValue;
-            // Snap to nearest valid value (30, 40, 50, 60)
-            threshold = Math.round(threshold / 10f) * 10;
-            threshold = Math.max(30, Math.min(60, threshold));
-
-            BypassChargingUtils.setThreshold(getContext(), threshold);
-            updateThresholdSummary(threshold);
-            return true;
         }
         return false;
     }

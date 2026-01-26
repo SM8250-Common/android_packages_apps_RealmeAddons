@@ -63,12 +63,9 @@
             android:summary="@string/bypass_charging_summary"
             android:defaultValue="false" />
 
-        <androidx.preference.SeekBarPreference
+        <org.lineageos.settings.device.preference.SegmentedButtonPreference
             android:key="bypass_charging_threshold"
             android:title="@string/bypass_charging_threshold_title"
-            android:defaultValue="30"
-            android:min="30"
-            android:max="60"
             android:dependency="bypass_charging" />
 
     </PreferenceCategory>
