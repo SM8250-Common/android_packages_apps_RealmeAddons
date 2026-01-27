@@ -104,6 +104,12 @@
             android:label="@string/smart_charging_title"
             android:enableOnBackInvokedCallback="true" />
 
+        <activity
+            android:name=".battery.BypassChargingActivity"
+            android:exported="false"
+            android:label="@string/bypass_charging_title"
+            android:enableOnBackInvokedCallback="true" />
+
         <service
             android:name=".battery.SmartChargingService"
             android:exported="false" />

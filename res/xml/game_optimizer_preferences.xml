@@ -22,14 +22,23 @@
         android:selectable="false" />
 
     <PreferenceCategory
-        android:key="game_optimizer_category"
-        android:title="@string/game_optimizer_title">
+        android:key="game_optimizer_category">
 
         <SwitchPreferenceCompat
             android:key="game_mode_enable"
             android:title="@string/game_mode_title"
             android:summary="@string/game_mode_summary"
             android:defaultValue="false" />
+
+        <Preference
+            android:key="bypass_charging_settings"
+            android:title="@string/bypass_charging_title"
+            android:summary="@string/bypass_charging_summary">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="org.lineageos.settings.device"
+                android:targetClass="org.lineageos.settings.device.battery.BypassChargingActivity" />
+        </Preference>
 
         <Preference
             android:key="thermal_profile_settings"
@@ -50,23 +59,6 @@
                 android:targetPackage="org.lineageos.settings.device"
                 android:targetClass="org.lineageos.settings.device.gamebar.GameBarSettingsActivity" />
         </Preference>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="bypass_charging_category"
-        android:title="@string/bypass_charging_title">
-
-        <SwitchPreferenceCompat
-            android:key="bypass_charging"
-            android:title="@string/bypass_charging_enable_title"
-            android:summary="@string/bypass_charging_summary"
-            android:defaultValue="false" />
-
-        <org.lineageos.settings.device.preference.SegmentedButtonPreference
-            android:key="bypass_charging_threshold"
-            android:title="@string/bypass_charging_threshold_title"
-            android:dependency="bypass_charging" />
 
     </PreferenceCategory>
 

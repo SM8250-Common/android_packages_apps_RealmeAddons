@@ -38,6 +38,7 @@
     <string name="bypass_charging_threshold_summary">Bypass activates above %d%%</string>
     <string name="bypass_charging_paused">Paused (low battery)</string>
     <string name="bypass_charging_low_battery">Bypass paused: battery below %d%%</string>
+    <string name="bypass_charging_description">Power your device directly from the charger while gaming to reduce heat and preserve battery health. Set a minimum battery threshold to ensure you never run out of power.</string>
 
     <!-- Smart Charging -->
     <string name="smart_charging_title">Smart Charging</string>
