@@ -158,4 +158,42 @@
     <string name="thermal_profile_dialer_desc">Low power mode for calls</string>
     <string name="thermal_profile_gaming_desc">High performance for gaming</string>
     <string name="thermal_profile_streaming_desc">Optimized for video streaming</string>
+
+    <!-- Camera App Selector -->
+    <string name="camera_category_title">Camera</string>
+    <string name="camera_app_title">Camera App</string>
+    <string name="camera_app_summary">Select default camera app</string>
+    <string name="camera_app_description">Choose your preferred camera app. Only the selected app will appear in your launcher.</string>
+    <string name="camera_oplus_title">Oplus Camera</string>
+    <string name="camera_oplus_summary">Stock camera experience</string>
+    <string name="camera_gcam_title">Google Camera</string>
+    <string name="camera_gcam_summary">Enhanced computational photography</string>
+    <string name="camera_gcam_not_installed">Not installed - tap to download</string>
+    <string name="camera_app_switched">Switched to %s</string>
+    <string name="camera_app_switch_failed">Failed to switch camera app</string>
+
+    <!-- GCam Download -->
+    <string name="gcam_download_title">Downloading GCam</string>
+    <string name="gcam_download_description">Downloading Google Camera APK</string>
+    <string name="gcam_download_started">Download started</string>
+    <string name="gcam_download_complete">Download completed</string>
+    <string name="gcam_download_failed">Download failed</string>
+    <string name="gcam_installed_selected">GCam installed and selected</string>
+    <string name="gcam_downloading_percent">Downloading\u2026 0%%</string>
+    <string name="gcam_downloading_percent_format">Downloading\u2026 %d%%</string>
+    <string name="gcam_installing">Installing\u2026</string>
+    <string name="gcam_install">Install</string>
+
+    <!-- GCam Install Status Messages -->
+    <string name="gcam_install_failed">Installation failed</string>
+    <string name="gcam_install_blocked">Installation blocked by device policy</string>
+    <string name="gcam_install_cancelled">Installation cancelled</string>
+    <string name="gcam_install_invalid">Invalid APK file</string>
+    <string name="gcam_install_conflict">Conflicting package already installed</string>
+    <string name="gcam_install_storage">Not enough storage space</string>
+    <string name="gcam_install_incompatible">APK not compatible with this device</string>
+    <string name="gcam_verify_failed">APK verification failed - file may be corrupted</string>
+    <string name="gcam_verifying">Verifying APK integrity…</string>
+    <string name="gcam_install_permission_required">Install permission required. Please enable it in settings.</string>
+    <string name="gcam_retry">Retry</string>
 </resources>

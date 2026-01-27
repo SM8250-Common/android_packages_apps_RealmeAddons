@@ -26,6 +26,10 @@
     <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:icon="@drawable/ic_realme_addons_logo"
@@ -124,6 +128,40 @@
         <service
             android:name=".charginganimation.ChargingMonitorService"
             android:exported="false" />
+
+        <!-- Camera App Selector -->
+        <activity
+            android:name=".camera.CameraAppActivity"
+            android:exported="false"
+            android:label="@string/camera_app_title"
+            android:enableOnBackInvokedCallback="true" />
+
+        <receiver
+            android:name=".camera.PackageInstallReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".camera.InstallSessionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="org.lineageos.settings.device.INSTALL_COMPLETE" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <!-- Thermal Profiles -->
         <activity
