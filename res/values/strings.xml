@@ -68,8 +68,21 @@
     <string name="charging_animation_style_title">Animation Style</string>
     <string name="charging_animation_style_summary">Choose animation style</string>
 
+    <!-- Pill Color -->
+    <string name="charging_animation_pill_color_title">Pill Color</string>
+    <string name="charging_animation_pill_color_summary">Choose gradient color for pill animation</string>
+    <string name="pill_color_teal">Teal</string>
+    <string name="pill_color_blue">Blue</string>
+    <string name="pill_color_purple">Purple</string>
+    <string name="pill_color_pink">Pink</string>
+    <string name="pill_color_red">Red</string>
+    <string name="pill_color_orange">Orange</string>
+    <string name="pill_color_yellow">Yellow</string>
+    <string name="pill_color_green">Green</string>
+
     <!-- Animation Style Names -->
     <string name="charging_animation_style_classic">Classic</string>
+    <string name="charging_animation_style_pill">Pill</string>
     <string name="charging_animation_style_charging_status">Charging Status</string>
     <string name="charging_animation_style_energy_bolt">Energy Bolt</string>
     <string name="charging_animation_style_fast_thunder">Fast Thunder</string>
