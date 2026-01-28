@@ -35,6 +35,13 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
+    <org.lineageos.settings.device.charginganimation.PillChargingView
+        android:id="@+id/pill_charging_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <!-- Container for Lottie animation with battery info overlay -->
     <FrameLayout
         android:id="@+id/lottie_container"

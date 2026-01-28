@@ -38,6 +38,14 @@
             android:entryValues="@array/charging_animation_style_values"
             android:defaultValue="classic" />
 
+        <ListPreference
+            android:key="charging_animation_pill_color"
+            android:title="@string/charging_animation_pill_color_title"
+            android:summary="@string/charging_animation_pill_color_summary"
+            android:entries="@array/charging_animation_pill_color_entries"
+            android:entryValues="@array/charging_animation_pill_color_values"
+            android:defaultValue="#00BFA5" />
+
         <Preference
             android:key="charging_animation_import"
             android:title="@string/charging_animation_import_title"

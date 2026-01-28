@@ -63,6 +63,7 @@ public class ChargingAnimationOverlay {
     private static final String PREF_SHOW_BOLT = "charging_animation_show_bolt";
     private static final String PREF_ANIMATION_STYLE = "charging_animation_style";
     private static final String PREF_BACKGROUND_STYLE = "charging_animation_background";
+    private static final String PREF_PILL_COLOR = "charging_animation_pill_color";
 
     private static ChargingAnimationOverlay sInstance;
     private static final Object sLock = new Object();
@@ -74,6 +75,7 @@ public class ChargingAnimationOverlay {
     private View mOverlayView;
     private View mBackgroundOverlay;
     private BatteryView mBatteryView;
+    private PillChargingView mPillChargingView;
     private LottieAnimationView mLottieView;
     private FrameLayout mLottieContainer;
     private LinearLayout mLottieBatteryInfo;
@@ -83,6 +85,7 @@ public class ChargingAnimationOverlay {
     private WindowManager.LayoutParams mLayoutParams;
     private boolean mShowing = false;
     private boolean mUsingLottie = false;
+    private boolean mUsingPill = false;
     private OnTouchListener mTouchListener;
 
     public static synchronized ChargingAnimationOverlay getInstance(Context context) {
@@ -141,6 +144,7 @@ public class ChargingAnimationOverlay {
                 mOverlayView = null;
                 mBackgroundOverlay = null;
                 mBatteryView = null;
+                mPillChargingView = null;
                 mLottieView = null;
                 mLottieContainer = null;
                 mLottieBatteryInfo = null;
@@ -148,6 +152,7 @@ public class ChargingAnimationOverlay {
                 mLottiePercentageContainer = null;
                 mLottieBatteryText = null;
                 mShowing = false;
+                mUsingPill = false;
                 Log.d(TAG, "Charging animation hidden");
             } catch (Exception e) {
                 Log.e(TAG, "Failed to hide overlay", e);
@@ -164,6 +169,9 @@ public class ChargingAnimationOverlay {
             if (mBatteryView != null) {
                 mBatteryView.setBatteryLevel(level);
             }
+            if (mPillChargingView != null) {
+                mPillChargingView.setBatteryLevel(level);
+            }
             if (mLottieBatteryText != null) {
                 mLottieBatteryText.setText(String.valueOf(level));
             }
@@ -178,6 +186,7 @@ public class ChargingAnimationOverlay {
         mOverlayView = LayoutInflater.from(mContext).inflate(R.layout.charging_animation_view, null);
         mBackgroundOverlay = mOverlayView.findViewById(R.id.background_overlay);
         mBatteryView = mOverlayView.findViewById(R.id.battery_view);
+        mPillChargingView = mOverlayView.findViewById(R.id.pill_charging_view);
         mLottieView = mOverlayView.findViewById(R.id.lottie_view);
         mLottieContainer = mOverlayView.findViewById(R.id.lottie_container);
         mLottieBatteryInfo = mOverlayView.findViewById(R.id.lottie_battery_info);
@@ -187,17 +196,26 @@ public class ChargingAnimationOverlay {
 
         // Determine animation style
         String animStyle = mPrefs.getString(PREF_ANIMATION_STYLE, "classic");
-        mUsingLottie = !animStyle.equals("classic");
+        mUsingLottie = !animStyle.equals("classic") && !animStyle.equals("pill");
+        mUsingPill = animStyle.equals("pill");
 
-        if (mUsingLottie) {
+        if (mUsingPill) {
+            // Use Pill charging view
+            mBatteryView.setVisibility(View.GONE);
+            mPillChargingView.setVisibility(View.VISIBLE);
+            mLottieContainer.setVisibility(View.GONE);
+            applyPillSettings();
+        } else if (mUsingLottie) {
             // Use Lottie animation
             mBatteryView.setVisibility(View.GONE);
+            mPillChargingView.setVisibility(View.GONE);
             mLottieContainer.setVisibility(View.VISIBLE);
             applyLottieAnimation(animStyle);
             applyLottieBatteryInfo();
         } else {
             // Use classic BatteryView
             mBatteryView.setVisibility(View.VISIBLE);
+            mPillChargingView.setVisibility(View.GONE);
             mLottieContainer.setVisibility(View.GONE);
             applySettings();
         }
@@ -250,8 +268,21 @@ public class ChargingAnimationOverlay {
         mBatteryView.setShowBolt(showBolt);
     }
 
+    private void applyPillSettings() {
+        if (mPillChargingView == null) return;
+
+        // Apply size
+        String size = mPrefs.getString(PREF_SIZE, "medium");
+        float scale = getSizeScale(size);
+        mPillChargingView.setScale(scale);
+
+        // Apply gradient color
+        String colorHex = mPrefs.getString(PREF_PILL_COLOR, "#00BFA5");
+        mPillChargingView.setGradientColor(colorHex);
+    }
+
     private void applyPosition() {
-        View targetView = mUsingLottie ? mLottieContainer : mBatteryView;
+        View targetView = mUsingPill ? mPillChargingView : (mUsingLottie ? mLottieContainer : mBatteryView);
         if (targetView == null) return;
 
         String position = mPrefs.getString(PREF_POSITION, "center");

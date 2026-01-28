@@ -40,6 +40,7 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
 
     private static final String KEY_ENABLED = "charging_animation_enabled";
     private static final String KEY_STYLE = "charging_animation_style";
+    private static final String KEY_PILL_COLOR = "charging_animation_pill_color";
     private static final String KEY_POSITION = "charging_animation_position";
     private static final String KEY_SIZE = "charging_animation_size";
     private static final String KEY_BACKGROUND = "charging_animation_background";
@@ -51,6 +52,7 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
 
     private SwitchPreferenceCompat mEnabledPref;
     private ListPreference mStylePref;
+    private ListPreference mPillColorPref;
     private ListPreference mPositionPref;
     private ListPreference mSizePref;
     private ListPreference mBackgroundPref;
@@ -83,6 +85,7 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
 
         mEnabledPref = findPreference(KEY_ENABLED);
         mStylePref = findPreference(KEY_STYLE);
+        mPillColorPref = findPreference(KEY_PILL_COLOR);
         mPositionPref = findPreference(KEY_POSITION);
         mSizePref = findPreference(KEY_SIZE);
         mBackgroundPref = findPreference(KEY_BACKGROUND);
@@ -102,11 +105,21 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
                 updateStyleSummary(style);
                 updateClassicOnlyPreferences(style);
                 updateImportVisibility(style);
+                updatePillColorVisibility(style);
                 return true;
             });
             updateStyleSummary(mStylePref.getValue());
             updateClassicOnlyPreferences(mStylePref.getValue());
             updateImportVisibility(mStylePref.getValue());
+            updatePillColorVisibility(mStylePref.getValue());
+        }
+
+        if (mPillColorPref != null) {
+            mPillColorPref.setOnPreferenceChangeListener((pref, newValue) -> {
+                updatePillColorSummary((String) newValue);
+                return true;
+            });
+            updatePillColorSummary(mPillColorPref.getValue());
         }
 
         if (mImportPref != null) {
@@ -218,6 +231,9 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
         if (mStylePref != null && value != null) {
             String summary;
             switch (value) {
+                case "pill":
+                    summary = getString(R.string.charging_animation_style_pill);
+                    break;
                 case "charging_status":
                     summary = getString(R.string.charging_animation_style_charging_status);
                     break;
@@ -260,6 +276,47 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
         // Show import option only when custom style is selected or always show it
         if (mImportPref != null) {
             mImportPref.setVisible(true);
+        }
+    }
+
+    private void updatePillColorVisibility(String style) {
+        // Show pill color option only when pill style is selected
+        if (mPillColorPref != null) {
+            mPillColorPref.setVisible("pill".equals(style));
+        }
+    }
+
+    private void updatePillColorSummary(String colorHex) {
+        if (mPillColorPref != null && colorHex != null) {
+            String summary;
+            switch (colorHex) {
+                case "#2196F3":
+                    summary = getString(R.string.pill_color_blue);
+                    break;
+                case "#9C27B0":
+                    summary = getString(R.string.pill_color_purple);
+                    break;
+                case "#E91E63":
+                    summary = getString(R.string.pill_color_pink);
+                    break;
+                case "#F44336":
+                    summary = getString(R.string.pill_color_red);
+                    break;
+                case "#FF9800":
+                    summary = getString(R.string.pill_color_orange);
+                    break;
+                case "#FFEB3B":
+                    summary = getString(R.string.pill_color_yellow);
+                    break;
+                case "#4CAF50":
+                    summary = getString(R.string.pill_color_green);
+                    break;
+                case "#00BFA5":
+                default:
+                    summary = getString(R.string.pill_color_teal);
+                    break;
+            }
+            mPillColorPref.setSummary(summary);
         }
     }
 
