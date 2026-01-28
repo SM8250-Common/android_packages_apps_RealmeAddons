@@ -65,22 +65,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="camera_category"
-        android:title="@string/camera_category_title">
-
-        <Preference
-            android:key="camera_app"
-            android:title="@string/camera_app_title"
-            android:summary="@string/camera_app_summary">
-            <intent
-                android:action="android.intent.action.MAIN"
-                android:targetPackage="org.lineageos.settings.device"
-                android:targetClass="org.lineageos.settings.device.camera.CameraAppActivity" />
-        </Preference>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="gaming_category"
         android:title="Gaming">
 
@@ -92,6 +76,22 @@
                 android:action="android.intent.action.MAIN"
                 android:targetPackage="org.lineageos.settings.device"
                 android:targetClass="org.lineageos.settings.device.gameoptimizer.GameOptimizerActivity" />
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="camera_category"
+        android:title="@string/camera_category_title">
+
+        <Preference
+            android:key="camera_app"
+            android:title="@string/camera_app_title"
+            android:summary="@string/camera_app_summary">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="org.lineageos.settings.device"
+                android:targetClass="org.lineageos.settings.device.camera.CameraAppActivity" />
         </Preference>
 
     </PreferenceCategory>
