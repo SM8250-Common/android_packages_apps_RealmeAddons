@@ -257,7 +257,7 @@ public class BatteryView extends View {
 
         // Draw bolt icon
         if (mShowBolt) {
-            drawBolt(canvas, centerX, centerY - radius * 0.35f);
+            drawBolt(canvas, centerX, centerY - radius * 0.45f);
         }
     }
 
