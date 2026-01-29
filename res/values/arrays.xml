@@ -148,18 +148,6 @@
         <item>2</item>
     </string-array>
 
-    <!-- Charging Animation Position -->
-    <string-array name="charging_animation_position_entries">
-        <item>Center</item>
-        <item>Top</item>
-        <item>Bottom</item>
-    </string-array>
-    <string-array name="charging_animation_position_values">
-        <item>center</item>
-        <item>top</item>
-        <item>bottom</item>
-    </string-array>
-
     <!-- Charging Animation Size -->
     <string-array name="charging_animation_size_entries">
         <item>Small</item>

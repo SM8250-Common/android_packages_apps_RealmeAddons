@@ -18,14 +18,18 @@ package org.lineageos.settings.device.charginganimation;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.settingslib.widget.SettingsBasePreferenceFragment;
@@ -50,10 +54,12 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
 
     public static final String CUSTOM_LOTTIE_FILENAME = "custom_charging_animation.json";
 
+    private static final long PREVIEW_HIDE_DELAY_MS = 2000;
+
     private SwitchPreferenceCompat mEnabledPref;
     private ListPreference mStylePref;
     private ListPreference mPillColorPref;
-    private ListPreference mPositionPref;
+    private SeekBarPreference mPositionPref;
     private ListPreference mSizePref;
     private ListPreference mBackgroundPref;
     private SwitchPreferenceCompat mShowTextPref;
@@ -61,6 +67,8 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
     private Preference mImportPref;
 
     private ActivityResultLauncher<Intent> mFilePickerLauncher;
+    private final Handler mPreviewHandler = new Handler(Looper.getMainLooper());
+    private final Runnable mHidePreviewRunnable = this::hidePositionPreview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +89,21 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        // Migrate old String position preference to int for SeekBarPreference
+        SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+        if (prefs != null) {
+            try {
+                prefs.getInt(KEY_POSITION, 50);
+            } catch (ClassCastException e) {
+                String old = prefs.getString(KEY_POSITION, "50");
+                int value = 50;
+                try {
+                    value = Integer.parseInt(old);
+                } catch (NumberFormatException ignored) {
+                }
+                prefs.edit().remove(KEY_POSITION).putInt(KEY_POSITION, value).apply();
+            }
+        }
         addPreferencesFromResource(R.xml.charging_animation_settings);
 
         mEnabledPref = findPreference(KEY_ENABLED);
@@ -131,8 +154,12 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
         }
 
         if (mPositionPref != null) {
+            mPositionPref.setMin(0);
+            mPositionPref.setUpdatesContinuously(true);
             mPositionPref.setOnPreferenceChangeListener((pref, newValue) -> {
-                updatePositionSummary((String) newValue);
+                int percent = (int) newValue;
+                updatePositionSummary(percent);
+                showPositionPreview(percent);
                 return true;
             });
             updatePositionSummary(mPositionPref.getValue());
@@ -155,23 +182,29 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
         }
     }
 
-    private void updatePositionSummary(String value) {
-        if (mPositionPref != null && value != null) {
-            String summary;
-            switch (value) {
-                case "top":
-                    summary = "Top";
-                    break;
-                case "bottom":
-                    summary = "Bottom";
-                    break;
-                case "center":
-                default:
-                    summary = "Center";
-                    break;
-            }
-            mPositionPref.setSummary(summary);
+    private void updatePositionSummary(int percent) {
+        if (mPositionPref != null) {
+            mPositionPref.setSummary(getString(R.string.charging_animation_position_format, percent));
         }
+    }
+
+    private void showPositionPreview(int percent) {
+        if (getContext() == null) return;
+        mPreviewHandler.removeCallbacks(mHidePreviewRunnable);
+        ChargingAnimationOverlay.getInstance(getContext()).showPreview(percent);
+        mPreviewHandler.postDelayed(mHidePreviewRunnable, PREVIEW_HIDE_DELAY_MS);
+    }
+
+    private void hidePositionPreview() {
+        if (getContext() == null) return;
+        ChargingAnimationOverlay.getInstance(getContext()).hidePreview();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPreviewHandler.removeCallbacks(mHidePreviewRunnable);
+        hidePositionPreview();
     }
 
     private void updateSizeSummary(String value) {

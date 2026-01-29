@@ -27,6 +27,7 @@ import android.graphics.Shader;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -84,6 +85,7 @@ public class ChargingAnimationOverlay {
     private TextView mLottieBatteryText;
     private WindowManager.LayoutParams mLayoutParams;
     private boolean mShowing = false;
+    private boolean mPreviewShowing = false;
     private boolean mUsingLottie = false;
     private boolean mUsingPill = false;
     private OnTouchListener mTouchListener;
@@ -160,12 +162,68 @@ public class ChargingAnimationOverlay {
         }
     }
 
+    public void showPreview(int positionPercent) {
+        synchronized (sLock) {
+            if (mShowing) return;
+
+            if (!canDrawOverlays()) {
+                Log.e(TAG, "Cannot draw overlays - permission not granted");
+                return;
+            }
+
+            if (mPreviewShowing) {
+                applyPositionPercent(positionPercent);
+                return;
+            }
+
+            createOverlay();
+
+            // Override position with the preview value
+            applyPositionPercent(positionPercent);
+
+            try {
+                mWindowManager.addView(mOverlayView, mLayoutParams);
+                mPreviewShowing = true;
+                updateBatteryLevel(getBatteryLevel());
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to show preview", e);
+            }
+        }
+    }
+
+    public void hidePreview() {
+        synchronized (sLock) {
+            if (!mPreviewShowing || mOverlayView == null) return;
+
+            try {
+                if (mLottieView != null) {
+                    mLottieView.cancelAnimation();
+                }
+                mWindowManager.removeView(mOverlayView);
+                mOverlayView = null;
+                mBackgroundOverlay = null;
+                mBatteryView = null;
+                mPillChargingView = null;
+                mLottieView = null;
+                mLottieContainer = null;
+                mLottieBatteryInfo = null;
+                mLottieBoltIcon = null;
+                mLottiePercentageContainer = null;
+                mLottieBatteryText = null;
+                mPreviewShowing = false;
+                mUsingPill = false;
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to hide preview", e);
+            }
+        }
+    }
+
     public boolean isShowing() {
         return mShowing;
     }
 
     public void updateBatteryLevel(int level) {
-        if (mShowing) {
+        if (mShowing || mPreviewShowing) {
             if (mBatteryView != null) {
                 mBatteryView.setBatteryLevel(level);
             }
@@ -282,10 +340,22 @@ public class ChargingAnimationOverlay {
     }
 
     private void applyPosition() {
+        int percent;
+        try {
+            percent = mPrefs.getInt(PREF_POSITION, 50);
+        } catch (ClassCastException e) {
+            // Old value was stored as String from dropdown, migrate to int
+            String old = mPrefs.getString(PREF_POSITION, "50");
+            percent = Integer.parseInt(old);
+            mPrefs.edit().remove(PREF_POSITION).putInt(PREF_POSITION, percent).apply();
+        }
+        applyPositionPercent(percent);
+    }
+
+    private void applyPositionPercent(int percent) {
         View targetView = mUsingPill ? mPillChargingView : (mUsingLottie ? mLottieContainer : mBatteryView);
         if (targetView == null) return;
 
-        String position = mPrefs.getString(PREF_POSITION, "center");
         android.widget.FrameLayout.LayoutParams params =
                 (android.widget.FrameLayout.LayoutParams) targetView.getLayoutParams();
 
@@ -295,24 +365,14 @@ public class ChargingAnimationOverlay {
                     android.widget.FrameLayout.LayoutParams.WRAP_CONTENT);
         }
 
-        switch (position) {
-            case "top":
-                params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-                params.topMargin = 150;
-                params.bottomMargin = 0;
-                break;
-            case "bottom":
-                params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-                params.bottomMargin = 150;
-                params.topMargin = 0;
-                break;
-            case "center":
-            default:
-                params.gravity = Gravity.CENTER;
-                params.topMargin = 0;
-                params.bottomMargin = 0;
-                break;
-        }
+        DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
+        int screenHeight = dm.heightPixels;
+        int padding = 50;
+        int availableHeight = screenHeight - padding * 2;
+
+        params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+        params.topMargin = padding + (int) (availableHeight * percent / 100f);
+        params.bottomMargin = 0;
 
         targetView.setLayoutParams(params);
     }

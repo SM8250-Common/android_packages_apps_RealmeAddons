@@ -51,13 +51,12 @@
             android:title="@string/charging_animation_import_title"
             android:summary="@string/charging_animation_import_summary" />
 
-        <ListPreference
+        <SeekBarPreference
             android:key="charging_animation_position"
             android:title="@string/charging_animation_position_title"
             android:summary="@string/charging_animation_position_summary"
-            android:entries="@array/charging_animation_position_entries"
-            android:entryValues="@array/charging_animation_position_values"
-            android:defaultValue="center" />
+            android:defaultValue="50"
+            android:max="100" />
 
         <ListPreference
             android:key="charging_animation_size"
