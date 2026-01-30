@@ -19,13 +19,18 @@ package org.lineageos.settings.device;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import androidx.preference.PreferenceManager;
 
 import org.lineageos.settings.device.battery.BypassChargingUtils;
 import org.lineageos.settings.device.battery.SmartChargingUtils;
 import org.lineageos.settings.device.battery.PowerStateMonitorService;
 import org.lineageos.settings.device.charginganimation.ChargingMonitorService;
 import org.lineageos.settings.device.display.AntiFlikerUtils;
+import org.lineageos.settings.device.display.AutoHBMService;
+import org.lineageos.settings.device.display.HBMController;
 import org.lineageos.settings.device.thermal.ThermalUtils;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
@@ -35,6 +40,22 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         Log.d(TAG, "Received boot completed intent");
+
+        // Restore HBM state
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean hbmEnabled = sharedPrefs.getBoolean("hbm_mode", false);
+        if (hbmEnabled && HBMController.isHBMSupported()) {
+            HBMController.setHBMEnabled(true);
+            Log.d(TAG, "HBM restored to enabled state");
+        }
+
+        // Start AutoHBM service
+        boolean autoHBMEnabled = sharedPrefs.getBoolean("auto_hbm", false);
+        if (autoHBMEnabled) {
+            Intent autoHBMIntent = new Intent(context, AutoHBMService.class);
+            context.startService(autoHBMIntent);
+            Log.d(TAG, "AutoHBM service started");
+        }
 
         // Restore anti-flicker state
         AntiFlikerUtils.restore(context);

@@ -23,6 +23,21 @@
     <!-- Display category -->
     <string name="display_category_title">Display</string>
 
+    <!-- HBM -->
+    <string name="hbm_settings_title">High Brightness Mode</string>
+    <string name="hbm_settings_summary">Configure HBM and Auto HBM settings</string>
+    <string name="hbm_category_title">Brightness Settings</string>
+    <string name="hbm_title">High Brightness Mode</string>
+    <string name="hbm_summary">Enable extra brightness for outdoor visibility</string>
+    <string name="auto_hbm_title">Auto HBM</string>
+    <string name="auto_hbm_summary">Enable HBM automatically based on ambient light</string>
+    <string name="auto_hbm_threshold_title">Auto HBM threshold</string>
+    <string name="hbm_tile_label">HBM</string>
+    <string name="hbm_tile_state_off">Off</string>
+    <string name="hbm_tile_state_on">On</string>
+    <string name="hbm_tile_state_auto">Auto</string>
+    <string name="hbm_description">Boost screen brightness beyond the standard limit for better outdoor visibility. Enable Auto HBM to let your device adjust automatically based on ambient light conditions.</string>
+
     <!-- Anti-flicker -->
     <string name="anti_flicker_title">Anti-flicker</string>
     <string name="anti_flicker_summary">Reduce eye strain in low brightness by eliminating screen flicker</string>
