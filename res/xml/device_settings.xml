@@ -30,6 +30,16 @@
         android:key="display_category"
         android:title="@string/display_category_title">
 
+        <Preference
+            android:key="hbm_settings"
+            android:title="@string/hbm_settings_title"
+            android:summary="@string/hbm_settings_summary">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="org.lineageos.settings.device"
+                android:targetClass="org.lineageos.settings.device.display.HBMActivity" />
+        </Preference>
+
         <SwitchPreferenceCompat
             android:key="anti_flicker"
             android:title="@string/anti_flicker_title"

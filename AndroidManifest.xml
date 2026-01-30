@@ -163,6 +163,28 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!-- HBM -->
+        <activity
+            android:name=".display.HBMActivity"
+            android:exported="false"
+            android:label="@string/hbm_settings_title"
+            android:enableOnBackInvokedCallback="true" />
+
+        <service
+            android:name=".display.AutoHBMService"
+            android:exported="false" />
+
+        <service
+            android:name=".display.HBMTileService"
+            android:icon="@drawable/ic_hbm_off"
+            android:label="@string/hbm_tile_label"
+            android:exported="true"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
         <!-- Thermal Profiles -->
         <activity
             android:name=".thermal.ThermalProfileActivity"
