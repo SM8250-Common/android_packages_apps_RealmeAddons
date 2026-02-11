@@ -20,10 +20,9 @@
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:clickable="true"
-    android:focusable="true"
-    android:background="?android:attr/selectableItemBackground">
+    android:focusable="true">
 
-    <!-- Content layer -->
+    <!-- Content layer matching SelectorWithWidgetPreference layout -->
     <LinearLayout
         android:id="@+id/gcam_content"
         android:layout_width="match_parent"
@@ -31,25 +30,35 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:paddingTop="12dp"
         android:paddingBottom="12dp">
 
-        <RadioButton
-            android:id="@+id/gcam_radio"
+        <!-- Widget frame matching SelectorWithWidgetPreference -->
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:focusable="false" />
+            android:layout_height="match_parent"
+            android:paddingHorizontal="20dp"
+            android:gravity="center"
+            android:minWidth="56dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/gcam_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:clickable="false"
+                android:focusable="false" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/gcam_title"
