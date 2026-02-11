@@ -244,23 +244,19 @@ public class PillChargingView extends View {
         // Draw pill background
         canvas.drawRoundRect(mPillRect, pillRadius, pillRadius, mPillBackgroundPaint);
 
-        // Calculate fill area (starts from left edge, fills entire pill width)
-        float fillStartX = margin;
-        float fillEndX = w - margin;
-        float fillWidth = fillEndX - fillStartX;
-        float currentFillWidth = fillWidth * (mAnimatedLevel / 100f);
+        // Calculate fill area (fills entire pill width, clipped to pill shape)
+        float currentFillWidth = w * (mAnimatedLevel / 100f);
 
         // Draw battery fill with gradient (from absolute left)
         if (mAnimatedLevel > 0) {
-            // Set fill rect - use same bounds as pill for proper curvature matching
-            // Start from 0 to ensure left edge clips properly to pill shape
-            mFillRect.set(0, 0, fillStartX + currentFillWidth, h);
+            // Set fill rect - clipped to pill shape so it matches curvature
+            mFillRect.set(0, 0, currentFillWidth, h);
 
             // Create gradient from base color to lighter variant
             int startColor = mGradientColor;
             int endColor = getLighterColor(mGradientColor);
             LinearGradient gradient = new LinearGradient(
-                    fillStartX, 0, fillEndX, 0,
+                    0, 0, w, 0,
                     startColor, endColor,
                     Shader.TileMode.CLAMP);
             mFillPaint.setShader(gradient);
