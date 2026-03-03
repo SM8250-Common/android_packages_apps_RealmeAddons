@@ -36,7 +36,7 @@
             android:summary="@string/charging_animation_style_summary"
             android:entries="@array/charging_animation_style_entries"
             android:entryValues="@array/charging_animation_style_values"
-            android:defaultValue="classic" />
+            android:defaultValue="pill" />
 
         <ListPreference
             android:key="charging_animation_pill_color"
@@ -55,7 +55,7 @@
             android:key="charging_animation_position"
             android:title="@string/charging_animation_position_title"
             android:summary="@string/charging_animation_position_summary"
-            android:defaultValue="50"
+            android:defaultValue="70"
             android:max="100" />
 
         <ListPreference

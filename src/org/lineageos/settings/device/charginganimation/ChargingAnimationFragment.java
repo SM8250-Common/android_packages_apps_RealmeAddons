@@ -93,10 +93,10 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
         SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
         if (prefs != null) {
             try {
-                prefs.getInt(KEY_POSITION, 50);
+                prefs.getInt(KEY_POSITION, 70);
             } catch (ClassCastException e) {
-                String old = prefs.getString(KEY_POSITION, "50");
-                int value = 50;
+                String old = prefs.getString(KEY_POSITION, "70");
+                int value = 70;
                 try {
                     value = Integer.parseInt(old);
                 } catch (NumberFormatException ignored) {
@@ -264,8 +264,8 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
         if (mStylePref != null && value != null) {
             String summary;
             switch (value) {
-                case "pill":
-                    summary = getString(R.string.charging_animation_style_pill);
+                case "classic":
+                    summary = getString(R.string.charging_animation_style_classic);
                     break;
                 case "charging_status":
                     summary = getString(R.string.charging_animation_style_charging_status);
@@ -285,9 +285,9 @@ public class ChargingAnimationFragment extends SettingsBasePreferenceFragment {
                 case "custom":
                     summary = getString(R.string.charging_animation_style_custom);
                     break;
-                case "classic":
+                case "pill":
                 default:
-                    summary = getString(R.string.charging_animation_style_classic);
+                    summary = getString(R.string.charging_animation_style_pill);
                     break;
             }
             mStylePref.setSummary(summary);

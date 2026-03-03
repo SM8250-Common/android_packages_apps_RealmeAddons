@@ -253,7 +253,7 @@ public class ChargingAnimationOverlay {
         mLottieBatteryText = mOverlayView.findViewById(R.id.lottie_battery_text);
 
         // Determine animation style
-        String animStyle = mPrefs.getString(PREF_ANIMATION_STYLE, "classic");
+        String animStyle = mPrefs.getString(PREF_ANIMATION_STYLE, "pill");
         mUsingLottie = !animStyle.equals("classic") && !animStyle.equals("pill");
         mUsingPill = animStyle.equals("pill");
 
@@ -342,10 +342,10 @@ public class ChargingAnimationOverlay {
     private void applyPosition() {
         int percent;
         try {
-            percent = mPrefs.getInt(PREF_POSITION, 50);
+            percent = mPrefs.getInt(PREF_POSITION, 70);
         } catch (ClassCastException e) {
             // Old value was stored as String from dropdown, migrate to int
-            String old = mPrefs.getString(PREF_POSITION, "50");
+            String old = mPrefs.getString(PREF_POSITION, "70");
             percent = Integer.parseInt(old);
             mPrefs.edit().remove(PREF_POSITION).putInt(PREF_POSITION, percent).apply();
         }
