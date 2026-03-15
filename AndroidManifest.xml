@@ -215,5 +215,23 @@
             android:name=".gamemode.GameModeRotationService"
             android:exported="false" />
 
+        <!-- Zram -->
+        <activity
+            android:name=".zram.ZramActivity"
+            android:exported="false"
+            android:label="@string/zram_settings_title"
+            android:enableOnBackInvokedCallback="true" />
+
+        <service
+            android:name=".zram.ZramTileService"
+            android:icon="@drawable/ic_zram"
+            android:label="@string/zram_tile_label"
+            android:exported="true"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
     </application>
 </manifest>

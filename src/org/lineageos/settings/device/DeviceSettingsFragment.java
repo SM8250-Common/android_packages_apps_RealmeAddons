@@ -24,13 +24,16 @@ import androidx.preference.SwitchPreferenceCompat;
 import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 
 import org.lineageos.settings.device.display.AntiFlikerUtils;
+import org.lineageos.settings.device.zram.ZramController;
 
 public class DeviceSettingsFragment extends SettingsBasePreferenceFragment
         implements OnPreferenceChangeListener {
 
     private static final String KEY_ANTI_FLICKER = "anti_flicker";
+    private static final String KEY_ZRAM = "zram";
 
     private SwitchPreferenceCompat mAntiFlikerPreference;
+    private Preference mZramPreference;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -43,6 +46,13 @@ public class DeviceSettingsFragment extends SettingsBasePreferenceFragment
                 mAntiFlikerPreference.setOnPreferenceChangeListener(this);
             } else {
                 getPreferenceScreen().removePreference(mAntiFlikerPreference);
+            }
+        }
+
+        mZramPreference = findPreference(KEY_ZRAM);
+        if (mZramPreference != null) {
+            if (!ZramController.isZramSupported()) {
+                getPreferenceScreen().removePreference(mZramPreference);
             }
         }
     }

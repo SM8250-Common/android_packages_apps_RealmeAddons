@@ -187,4 +187,18 @@
     <string name="thermal_profile_dialer_desc">Low power mode for calls</string>
     <string name="thermal_profile_gaming_desc">High performance for gaming</string>
     <string name="thermal_profile_streaming_desc">Optimized for video streaming</string>
+
+    <!-- Zram -->
+    <string name="zram_title">Zram</string>
+    <string name="zram_summary">Compressed RAM swap for improved multitasking</string>
+    <string name="zram_settings_title">Zram Settings</string>
+    <string name="zram_settings_summary">Configure compressed swap memory</string>
+    <string name="zram_enabled_title">Enable Zram</string>
+    <string name="zram_enabled_summary">Use compressed RAM as swap memory</string>
+    <string name="zram_size_title">Zram Size</string>
+    <string name="zram_size_summary">Set compressed swap size in MB</string>
+    <string name="zram_size_format">Size: %d MB</string>
+    <string name="zram_description">Zram creates a compressed block device in RAM, which can be used as swap space. This improves multitasking performance by providing additional virtual memory, reducing the need to swap to slower flash storage.</string>
+    <string name="zram_tile_label">Zram</string>
+    <string name="zram_unavailable">Zram is not supported on this device</string>
 </resources>

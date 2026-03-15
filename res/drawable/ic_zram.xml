@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (C) 2025 The LineageOS Project
+
+ SPDX-License-Identifier: Apache-2.0
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Main memory chip outline -->
+    <path
+        android:strokeColor="?android:attr/colorControlNormal"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M6,3 h12 a2,2 0,0,1 2,2 v14 a2,2 0,0,1 -2,2 h-12 a2,2 0,0,1 -2,-2 v-14 a2,2 0,0,1 2,-2 z" />
+
+    <!-- Compression arrows -->
+    <path
+        android:strokeColor="?android:attr/colorControlNormal"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M9,9 l3,-3 l3,3" />
+    <path
+        android:strokeColor="?android:attr/colorControlNormal"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M9,15 l3,3 l3,-3" />
+
+    <!-- Center compression symbol -->
+    <path
+        android:fillColor="?android:attr/colorControlNormal"
+        android:pathData="M12,10.5 A1.5,1.5 0,1,1 12,13.5 A1.5,1.5 0,1,1 12,10.5 z" />
+
+    <!-- Pin connectors on top -->
+    <path
+        android:strokeColor="?android:attr/colorControlNormal"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M8,3 V1 M12,3 V1 M16,3 V1" />
+
+    <!-- Pin connectors on bottom -->
+    <path
+        android:strokeColor="?android:attr/colorControlNormal"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M8,21 V23 M12,21 V23 M16,21 V23" />
+
+</vector>

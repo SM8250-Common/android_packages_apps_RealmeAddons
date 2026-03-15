@@ -90,4 +90,20 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="performance_category"
+        android:title="Performance">
+
+        <Preference
+            android:key="zram"
+            android:title="@string/zram_settings_title"
+            android:summary="@string/zram_settings_summary">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="org.lineageos.settings.device"
+                android:targetClass="org.lineageos.settings.device.zram.ZramActivity" />
+        </Preference>
+
+    </PreferenceCategory>
+
     </PreferenceScreen>
